@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/segment.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css">
+    <style>
+      body {
+        margin: 1em;
+        height: auto;
+      }
+    </style>
+    <title>와디즈 급여명세서 뷰어</title>
+  </head>
+  <body>
+    <div class="ui raised very padded text container segment">
+      <h2 class="ui header">
+        급여명세서 뷰어
+      </h2>
+      <form id="form" method="POST" encType="multipart/form-data" class="ui form">
+        <div class="field">
+          <label>파일 선택</label>
+          <input id="file" type="file" name="paper" accept=".htm">
+        </div>
+        <div class="field">
+          <label>생년월일</label>
+          <input id="password" type="password" name="password" maxlength="8" placeholder="생년월일 8자리 (19000101)">
+        </div>
+        <button class="ui button teal" type="submit">Submit</button>
+      </form>
+    </div>
+    <iframe src="https://ghbtns.com/github-btn.html?user=minjunk&repo=pay-paper-viewer&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+    <script src="./decrypt.js"></script>
+  </body>
+</html>

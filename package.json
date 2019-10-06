@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "pay-paper-viewer",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild",
+    "predist": "rimraf dist",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "productName": "Pay Paper Viewer"
+  },
+  "devDependencies": {
+    "electron": "^4.1.1",
+    "electron-builder": "^20.39.0",
+    "electron-rebuild": "^1.8.4",
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "iconv": "^2.3.3"
+  }
+}
