@@ -1,3 +1,8 @@
+/**
+ * 복호화 알고리즘은 아래 블로그의 글을 참조하였습니다.
+ * https://enghqii.tistory.com/42
+ */
+
 import crypto from 'crypto';
 import iconv from 'iconv-lite';
 
@@ -11,10 +16,7 @@ function hashSaltPassword(salt: Buffer, password: string): Buffer {
   const saltedKey = hash.digest().slice(0, 16);
   return saltedKey;
 }
-/**
- * 해당 메서드는 아래 블로그의 글을 바탕으로 작성되었습니다.
- * https://enghqii.tistory.com/42
- */
+
 function decryptPayPaper(password: string, encrypted: string): string {
   // read blob from base64 encoded string
   const blob = Buffer.from(encrypted, 'base64');
