@@ -104,7 +104,7 @@ const rendererConfig: webpack.Configuration = merge(baseConfig, {
     }),
     new HtmlWebpackPlugin({
       template: path.join(srcDir, 'renderer/app.html'),
-      filename: 'build/app.html',
+      filename: isEnvProduction ? 'build/app.html' : 'index.html',
     }),
   ],
   node: {
