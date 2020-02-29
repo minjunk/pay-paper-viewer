@@ -25,7 +25,7 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('open-paper', (event, title: string) => {
+ipcMain.on('open-paper', (event, { title }: { title: string }) => {
   switchPaperActionMenu({
     title,
     exportPdf(filePath) {
