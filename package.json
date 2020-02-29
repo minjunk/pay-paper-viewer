@@ -1,30 +1,100 @@
 {
   "private": true,
   "name": "pay-paper-viewer",
-  "version": "1.0.0",
+  "productName": "PayPaperViewer",
+  "version": "1.1.0",
+  "description": "더존 급여명세서를 Mac에서 열어볼 수 있는 뷰어",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "dev": "run-p dev:app",
+    "dev:main": "cross-env NODE_ENV=development electron --lang=ko -r ts-node/register src/main/index.ts",
+    "dev:app": "cross-env NODE_ENV=development webpack-dev-server --config-name renderer",
+    "postinstall": "electron-builder install-app-deps",
     "rebuild": "electron-rebuild",
-    "predist": "rimraf dist",
-    "dist": "electron-builder"
+    "predist": "run-s clean",
+    "dist": "run-s dist:*",
+    "dist:build": "cross-env NODE_ENV=production webpack",
+    "dist:pack": "electron-builder build",
+    "lint": "eslint --ext ts,js --max-warnings 0 .",
+    "clean": "rimraf main.js build dist"
   },
   "build": {
-    "productName": "Pay Paper Viewer"
+    "files": [
+      "main.js",
+      "build/"
+    ],
+    "extraResources": [
+      {
+        "from": "src/resources",
+        "to": ".",
+        "filter": [
+          "*.lproj/*"
+        ]
+      }
+    ],
+    "mac": {
+      "electronLanguages": [
+        "ko"
+      ]
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "minjunk",
+      "repo": "pay-paper-viewer",
+      "private": true,
+      "publishAutoUpdate": false
+    }
   },
-  "devDependencies": {
-    "electron": "^4.1.1",
-    "electron-builder": "^20.39.0",
-    "electron-rebuild": "^1.8.4",
-    "eslint": "^5.15.3",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
-    "rimraf": "^2.6.3"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minjunk/pay-paper-viewer.git"
+  },
+  "author": {
+    "name": "Minjun Kim",
+    "email": "me@minjun.kim",
+    "url": "https://github.com/minjunk"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "iconv": "^2.3.3"
+    "cheerio": "^1.0.0-rc.3",
+    "iconv-lite": "^0.5.1"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.16",
+    "@types/html-webpack-plugin": "^3.2.2",
+    "@types/mini-css-extract-plugin": "^0.9.1",
+    "@types/webpack": "^4.41.7",
+    "@types/webpack-dev-server": "^3.10.0",
+    "@types/webpack-merge": "^4.1.5",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "cross-env": "^7.0.0",
+    "css-loader": "^3.4.2",
+    "electron": "^8.0.2",
+    "electron-builder": "^22.3.2",
+    "electron-rebuild": "^1.10.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-airbnb-typescript": "^7.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-loader": "^0.6.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.13.0",
+    "rimraf": "^3.0.2",
+    "strip-ansi": "^6.0.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-merge": "^4.2.2"
   }
 }
