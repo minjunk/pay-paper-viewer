@@ -1,38 +1,35 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src https://ghbtns.com blob:;
+      style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+      font-src https://fonts.gstatic.com; img-src http://asp.duzonerp.co.kr;">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/segment.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css">
-    <style>
-      body {
-        margin: 1em;
-        height: auto;
-      }
-    </style>
-    <title>와디즈 급여명세서 뷰어</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/message.min.css">
+    <title>급여명세서 뷰어</title>
   </head>
   <body>
-    <div class="ui raised very padded text container segment">
+    <div class="ui raised very padded text container segment piled">
       <h2 class="ui header">
         급여명세서 뷰어
       </h2>
       <form id="form" method="POST" encType="multipart/form-data" class="ui form">
         <div class="field">
-          <label>파일 선택</label>
-          <input id="file" type="file" name="paper" accept=".htm">
-        </div>
-        <div class="field">
           <label>생년월일</label>
           <input id="password" type="password" name="password" maxlength="8" placeholder="생년월일 8자리 (19000101)">
         </div>
-        <button class="ui button teal" type="submit">Submit</button>
+        <button class="ui button teal" type="submit">확인</button>
       </form>
     </div>
-    <iframe src="https://ghbtns.com/github-btn.html?user=minjunk&repo=pay-paper-viewer&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-    <script src="./decrypt.js"></script>
+    <div class="ui message">
+      <p>본 뷰어는 <a href="https://enghqii.tistory.com/42" target="_blank">&lt;급여명세서 복호화하기&gt;</a>를 바탕으로 만들어졌으며 온라인으로 어떠한 정보도 전송하지 않습니다.</p>
+    </div>
+    <iframe src="https://ghbtns.com/github-btn.html?user=minjunk&type=follow" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+    <webview id="viewer"></webview>
   </body>
 </html>

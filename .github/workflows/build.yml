@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      CI: true
+      NODE_ENV: production
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install
+      run: |
+        yarn install --production=false
+    - name: Rebuild
+      run: |
+        yarn run rebuild
+    - name: Lint
+      run: |
+        yarn run lint
+    - name: Build
+      run: |
+        yarn run dist:build
+        yarn run dist:pack --publish never
