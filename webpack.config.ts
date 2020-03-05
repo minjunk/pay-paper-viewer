@@ -5,6 +5,7 @@ import merge from 'webpack-merge';
 import { spawn } from 'child_process';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import 'dotenv';
 
 import { srcDir } from './config/paths';
 
@@ -50,6 +51,9 @@ const baseConfig: webpack.Configuration = {
     extensions: ['.ts', '.js'],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN),
+    }),
     new MiniCssExtractPlugin({
       filename: 'build/[contenthash].css',
       chunkFilename: 'build/[contenthash].chunk.css',

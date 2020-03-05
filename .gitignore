@@ -4,3 +4,4 @@ node_modules
 /main.js
 /build
 /dist
+/.env
