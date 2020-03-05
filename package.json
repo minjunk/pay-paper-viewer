@@ -2,7 +2,7 @@
   "private": true,
   "name": "pay-paper-viewer",
   "productName": "PayPaperViewer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "더존 급여명세서를 Mac에서 열어볼 수 있는 뷰어",
   "main": "main.js",
   "scripts": {
@@ -37,7 +37,27 @@
         "ko"
       ]
     },
+    "dmg": {
+      "iconSize": 88,
+      "contents": [
+        {
+          "x": 170,
+          "y": 260
+        },
+        {
+          "x": 435,
+          "y": 260,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 600,
+        "height": 400
+      }
+    },
     "directories": {
+      "buildResources": "src/resources",
       "output": "dist"
     },
     "publish": {
@@ -58,6 +78,7 @@
     "url": "https://github.com/minjunk"
   },
   "dependencies": {
+    "@sentry/electron": "^1.2.1",
     "cheerio": "^1.0.0-rc.3",
     "iconv-lite": "^0.5.1"
   },
@@ -72,6 +93,7 @@
     "@typescript-eslint/parser": "^2.21.0",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
+    "dotenv": "^8.2.0",
     "electron": "^8.0.2",
     "electron-builder": "^22.3.2",
     "electron-rebuild": "^1.10.0",
