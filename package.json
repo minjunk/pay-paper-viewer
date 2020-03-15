@@ -2,7 +2,7 @@
   "private": true,
   "name": "pay-paper-viewer",
   "productName": "PayPaperViewer",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "더존 급여명세서를 Mac에서 열어볼 수 있는 뷰어",
   "main": "main.js",
   "scripts": {
@@ -118,6 +118,7 @@
     "webpack-merge": "^4.2.2"
   },
   "resolutions": {
-    "acorn": ">=7.1.1"
+    "acorn": "^7.1.1",
+    "minimist": "^1.2.2"
   }
 }
