@@ -15,6 +15,14 @@ async function openFileDialog(win: BrowserWindow): Promise<void> {
     const filePath = result.filePaths[0];
     const fileData = fs.readFileSync(filePath).toString();
     const encrypted = getEncryptedData(fileData);
+    if (!encrypted) {
+      dialog.showMessageBoxSync(win, {
+        type: 'error',
+        message: '급여명세서 파일 형식이 아닙니다. 다시 시도 해 주세요.',
+      });
+      openFileDialog(win);
+      return;
+    }
 
     // 렌더러에 암호화된 데이터를 전송
     win.webContents.send('open-file', encrypted);
