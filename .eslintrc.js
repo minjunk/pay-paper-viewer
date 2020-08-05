@@ -24,8 +24,11 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'global-require': 'off',
+    'import/no-named-as-default': 'off',
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: ['*.config.ts'],
     }],
+    'react/jsx-props-no-spreading': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
   },
 };

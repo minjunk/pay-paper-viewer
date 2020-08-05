@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
+    "sourceMap": true,
     "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "target": "es5",
-    "esModuleInterop": true
-  }
+    "jsx": "react"
+  },
+  "include": [
+    "src"
+  ]
 }

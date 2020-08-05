@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
@@ -8,15 +7,16 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import { srcDir } from './config/paths';
 
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+const { dependencies: externals } = require('./package.json');
+
 const isEnvProduction = process.env.NODE_ENV === 'production';
 const isEnvDevelopment = process.env.NODE_ENV === 'development';
 
-const pkg = fs.readFileSync(path.join(__dirname, 'package.json'));
-const { dependencies: externals } = JSON.parse(pkg.toString());
-
 const port = Number(process.env.PORT) || 3000;
-
-/* eslint-disable no-nested-ternary */
 
 const baseConfig: webpack.Configuration = {
   mode: isEnvProduction ? 'production'
@@ -29,12 +29,25 @@ const baseConfig: webpack.Configuration = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/i,
+        test: /\.module\.css$/,
+        exclude: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              module: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
@@ -47,7 +60,7 @@ const baseConfig: webpack.Configuration = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -71,10 +84,10 @@ const rendererConfig: webpack.Configuration = merge(baseConfig, {
   name: 'renderer',
   target: 'electron-renderer',
   entry: [
-    path.join(srcDir, 'renderer/index.ts'),
+    path.join(srcDir, 'renderer/index.tsx'),
     path.join(srcDir, 'renderer/app.css'),
   ],
-  devtool: 'inline-source-map',
+  devtool: isEnvDevelopment ? 'inline-source-map' : false,
   output: {
     filename: 'build/renderer.[hash].js',
     chunkFilename: 'build/renderer.[hash].chunk.js',

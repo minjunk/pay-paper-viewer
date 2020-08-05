@@ -1,7 +1,6 @@
 import { shell, BrowserWindow } from 'electron';
-import openFileDialog from './openFileDialog';
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // 브라우저 창을 생성합니다.
   const win = new BrowserWindow({
     width: 658,
@@ -20,7 +19,6 @@ function createWindow(): void {
   } else {
     win.loadFile('build/app.html');
   }
-  openFileDialog(win);
 
   // 새창을 열 때 외부 웹브라우저로 연다.
   win.webContents.on('new-window', (event, url) => {
@@ -34,6 +32,8 @@ function createWindow(): void {
       mode: 'detach',
     });
   }
+
+  return win;
 }
 
 export default createWindow;
