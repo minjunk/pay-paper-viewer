@@ -34,26 +34,6 @@ const baseConfig: webpack.Configuration = {
         exclude: /node_modules/,
       },
       {
-        test: /\.module\.css$/,
-        exclude: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              module: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
-      },
-      {
         test: /\.node$/,
         use: 'node-loader',
       },
@@ -62,12 +42,6 @@ const baseConfig: webpack.Configuration = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'build/[contenthash].css',
-      chunkFilename: 'build/[contenthash].chunk.css',
-    }),
-  ],
 };
 
 const mainConfig: webpack.Configuration = merge(baseConfig, {
@@ -83,10 +57,7 @@ const mainConfig: webpack.Configuration = merge(baseConfig, {
 const rendererConfig: webpack.Configuration = merge(baseConfig, {
   name: 'renderer',
   target: 'electron-renderer',
-  entry: [
-    path.join(srcDir, 'renderer/index.tsx'),
-    path.join(srcDir, 'renderer/app.css'),
-  ],
+  entry: path.join(srcDir, 'renderer/index.tsx'),
   devtool: isEnvDevelopment ? 'inline-source-map' : false,
   output: {
     filename: 'build/renderer.[hash].js',
@@ -111,11 +82,42 @@ const rendererConfig: webpack.Configuration = merge(baseConfig, {
         .on('error', (spawnError) => console.error(spawnError));
     },
   },
+  module: {
+    rules: [
+      {
+        test: /\.module\.css$/,
+        exclude: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              module: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
+      },
+    ],
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.PORT': JSON.stringify(port),
     }),
+    new MiniCssExtractPlugin({
+      filename: 'build/renderer.[contenthash].css',
+      chunkFilename: 'build/renderer.[contenthash].chunk.css',
+    }),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     new HtmlWebpackPlugin({
+      inject: true,
       template: path.join(srcDir, 'renderer/app.html'),
       filename: isEnvProduction ? 'build/app.html' : 'index.html',
     }),

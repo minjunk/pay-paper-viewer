@@ -2,8 +2,6 @@ import React, { useRef, useEffect, forwardRef } from 'react';
 
 import useForkRef from '../hooks/useForkRef';
 
-import styles from './Webview.module.css';
-
 export type WebviewDomReadyEvent = Electron.Event & {
   target: Electron.WebviewTag;
 };
@@ -29,7 +27,18 @@ export const Webview = forwardRef<Electron.WebviewTag, Props>(({
     <webview
       ref={webviewRef}
       src={src}
-      className={styles.viewer}
+      style={{
+        display: src ? 'flex' : 'none',
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10000,
+        width: '100%',
+        height: '100%',
+        background: '#fff',
+      }}
     />
   );
 });
