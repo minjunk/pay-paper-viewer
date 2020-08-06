@@ -10,7 +10,6 @@
     "dev:main": "cross-env NODE_ENV=development electron --lang=ko -r ts-node/register src/main/index.ts",
     "dev:app": "cross-env NODE_ENV=development webpack-dev-server --config-name renderer",
     "postinstall": "electron-builder install-app-deps",
-    "rebuild": "electron-rebuild",
     "predist": "run-s clean",
     "dist": "run-s dist:*",
     "dist:build": "cross-env NODE_ENV=production webpack",
@@ -87,15 +86,13 @@
   },
   "author": {
     "name": "Minjun Kim",
-    "email": "me@minjun.kim",
+    "email": "hi@minjun.kim",
     "url": "https://github.com/minjunk"
   },
   "dependencies": {
     "cheerio": "1.0.0-rc.3",
     "classnames": "2.2.6",
-    "electron-devtools-installer": "3.1.1",
     "iconv-lite": "0.6.2",
-    "preact": "10.4.6",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
@@ -116,7 +113,6 @@
     "css-loader": "4.2.0",
     "electron": "9.1.2",
     "electron-builder": "22.8.0",
-    "electron-rebuild": "1.11.0",
     "eslint": "7.6.0",
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-config-airbnb-typescript": "9.0.0",
