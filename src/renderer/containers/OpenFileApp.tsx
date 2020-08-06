@@ -20,6 +20,10 @@ export const OpenFileApp: React.FC = () => {
     ipcRenderer.send('open-file', passwd);
   }, []);
 
+  const handleOpenFileError = useCallback(() => {
+    setLoading(false);
+  }, []);
+
   const handleDecryptedFile = useCallback((_event, data: string) => {
     const blob = createBlobURL(data);
     setDecrypted(blob);
@@ -51,10 +55,12 @@ export const OpenFileApp: React.FC = () => {
   }, [webviewRef]);
 
   useEffect(() => {
+    ipcRenderer.on('open-file-error', handleOpenFileError);
     ipcRenderer.on('decrypted-file', handleDecryptedFile);
     ipcRenderer.on('will-export-pdf-path', handleWillExportPDfPath);
     ipcRenderer.on('will-print-paper', handleWillPrintPaper);
     return () => {
+      ipcRenderer.off('open-file-error', handleOpenFileError);
       ipcRenderer.off('decrypted-file', handleDecryptedFile);
       ipcRenderer.off('will-export-pdf-path', handleWillExportPDfPath);
       ipcRenderer.off('will-print-paper', handleWillPrintPaper);

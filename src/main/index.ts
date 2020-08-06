@@ -42,6 +42,9 @@ ipcMain.on('open-file', (event, password) => {
   openFile(event.sender, password)
     .then((decrypted) => {
       event.reply('decrypted-file', decrypted);
+    })
+    .catch(() => {
+      event.reply('open-file-error');
     });
 });
 
