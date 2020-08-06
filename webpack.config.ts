@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import webpack from 'webpack';
 import merge from 'webpack-merge';
@@ -8,15 +7,16 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import { srcDir } from './config/paths';
 
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+const { dependencies: externals } = require('./package.json');
+
 const isEnvProduction = process.env.NODE_ENV === 'production';
 const isEnvDevelopment = process.env.NODE_ENV === 'development';
 
-const pkg = fs.readFileSync(path.join(__dirname, 'package.json'));
-const { dependencies: externals } = JSON.parse(pkg.toString());
-
 const port = Number(process.env.PORT) || 3000;
-
-/* eslint-disable no-nested-ternary */
 
 const baseConfig: webpack.Configuration = {
   mode: isEnvProduction ? 'production'
@@ -29,16 +29,9 @@ const baseConfig: webpack.Configuration = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
       },
       {
         test: /\.node$/,
@@ -47,14 +40,8 @@ const baseConfig: webpack.Configuration = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'build/[contenthash].css',
-      chunkFilename: 'build/[contenthash].chunk.css',
-    }),
-  ],
 };
 
 const mainConfig: webpack.Configuration = merge(baseConfig, {
@@ -70,11 +57,8 @@ const mainConfig: webpack.Configuration = merge(baseConfig, {
 const rendererConfig: webpack.Configuration = merge(baseConfig, {
   name: 'renderer',
   target: 'electron-renderer',
-  entry: [
-    path.join(srcDir, 'renderer/index.ts'),
-    path.join(srcDir, 'renderer/app.css'),
-  ],
-  devtool: 'inline-source-map',
+  entry: path.join(srcDir, 'renderer/index.tsx'),
+  devtool: isEnvDevelopment ? 'inline-source-map' : false,
   output: {
     filename: 'build/renderer.[hash].js',
     chunkFilename: 'build/renderer.[hash].chunk.js',
@@ -98,11 +82,42 @@ const rendererConfig: webpack.Configuration = merge(baseConfig, {
         .on('error', (spawnError) => console.error(spawnError));
     },
   },
+  module: {
+    rules: [
+      {
+        test: /\.module\.css$/,
+        exclude: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              module: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
+      },
+    ],
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.PORT': JSON.stringify(port),
     }),
+    new MiniCssExtractPlugin({
+      filename: 'build/renderer.[contenthash].css',
+      chunkFilename: 'build/renderer.[contenthash].chunk.css',
+    }),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     new HtmlWebpackPlugin({
+      inject: true,
       template: path.join(srcDir, 'renderer/app.html'),
       filename: isEnvProduction ? 'build/app.html' : 'index.html',
     }),

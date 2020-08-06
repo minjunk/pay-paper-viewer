@@ -2,8 +2,10 @@
   "extends": "./tsconfig.json",
   "include": [
     "config/**/*.ts",
+    "src/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.js",
+    "src/typings.d.ts",
     "webpack.config.ts",
     ".eslintrc.js"
   ]

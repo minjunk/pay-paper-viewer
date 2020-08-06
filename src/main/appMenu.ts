@@ -64,17 +64,16 @@ export function switchPaperActionMenu(enabledOptions: {
   print(): void;
 } | null = null): void {
   if (enabledOptions !== null) {
-    const { title, exportPdf, print } = enabledOptions;
     switchMenuOption('export-pdf', {
       enabled: true,
       click: async () => {
-        const { filePath } = await savePdfDialog(title);
-        exportPdf(filePath);
+        const { filePath } = await savePdfDialog(enabledOptions.title);
+        enabledOptions.exportPdf(filePath);
       },
     });
     switchMenuOption('print', {
       enabled: true,
-      click: () => print(),
+      click: () => enabledOptions.print(),
     });
   } else {
     switchMenuOption('export-pdf', { enabled: false, click() {} });

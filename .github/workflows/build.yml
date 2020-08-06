@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches-ignore:
-      - master
+      - main
 
 jobs:
   build:
@@ -20,9 +20,6 @@ jobs:
     - name: Install
       run: |
         yarn install --production=false
-    - name: Rebuild
-      run: |
-        yarn run rebuild
     - name: Lint
       run: |
         yarn run lint

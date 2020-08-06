@@ -3,6 +3,7 @@ import {
 } from 'electron';
 import createWindow from './createWindow';
 import appMenu, { switchPaperActionMenu } from './appMenu';
+import openFile from './openFile';
 
 // 메뉴바
 const menu = appMenu(app.name);
@@ -32,9 +33,19 @@ ipcMain.on('open-paper', (event, { title }: { title: string }) => {
       event.reply('will-export-pdf-path', filePath);
     },
     print() {
-      event.reply('print-paper');
+      event.reply('will-print-paper');
     },
   });
+});
+
+ipcMain.on('open-file', (event, password) => {
+  openFile(event.sender, password)
+    .then((decrypted) => {
+      event.reply('decrypted-file', decrypted);
+    })
+    .catch(() => {
+      event.reply('open-file-error');
+    });
 });
 
 app.allowRendererProcessReuse = true;
