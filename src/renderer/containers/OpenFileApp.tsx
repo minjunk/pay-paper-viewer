@@ -45,6 +45,7 @@ export const OpenFileApp: React.FC = () => {
   const handleWillExportPDfPath = useCallback((_, filePath: string) => {
     webviewRef.current.printToPDF({
       pageSize: 'A4',
+      printBackground: true,
     })
       .then((data) => fs.writeFileSync(filePath, data))
       .catch(() => {});

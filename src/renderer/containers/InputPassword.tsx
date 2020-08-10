@@ -14,7 +14,6 @@ function getlocalStoragePassword() {
   try {
     return localStorage.getItem(SAVE_PASSWORD_KEY) || '';
   } catch (err) {
-    console.error(err);
     return '';
   }
 }
@@ -28,7 +27,6 @@ function setlocalStoragePassword(password: string) {
     }
   } catch (err) {
     //
-    console.error(err);
   }
 }
 
