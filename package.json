@@ -111,7 +111,7 @@
     "@typescript-eslint/parser": "3.7.1",
     "cross-env": "7.0.2",
     "css-loader": "4.2.0",
-    "electron": "9.1.2",
+    "electron": "9.3.0",
     "electron-builder": "22.8.0",
     "eslint": "7.6.0",
     "eslint-config-airbnb-base": "14.2.0",
