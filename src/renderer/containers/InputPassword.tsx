@@ -69,7 +69,7 @@ export const InputPassword: React.FC<Props> = ({
     if (inputRef.current) {
       const { value } = inputRef.current;
       setInputError(!value);
-      if (value.length < 8) {
+      if (value.length < 6) {
         inputRef.current.select();
       } else {
         onSubmit(event, value);
@@ -91,15 +91,14 @@ export const InputPassword: React.FC<Props> = ({
       onSubmit={handleSubmit}
     >
       <div className={cx('field', inputError && 'error')}>
-        <label htmlFor="password">생년월일</label>
+        <label htmlFor="password">비밀번호</label>
         <input
           ref={inputRef}
           id="password"
           type="password"
           name="password"
-          maxLength={8}
           readOnly={!!savedPassword}
-          placeholder="생년월일 8자리 (19000101)"
+          placeholder="비밀번호 6자리 이상 (자리수는 회사마다 다를 수 있습니다)"
         />
       </div>
       <div className="inline field">
