@@ -109,7 +109,7 @@ export const InputPassword: React.FC<Props> = ({
             checked={savePassword}
             onChange={(event) => setSavePassword(event.target.checked)}
           />
-          <label htmlFor="checkbox">생년월일 저장</label>
+          <label htmlFor="checkbox">비밀번호 저장</label>
         </div>
       </div>
       <Button type="submit">
