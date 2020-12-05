@@ -2,7 +2,7 @@
   "private": true,
   "name": "pay-paper-viewer",
   "productName": "PayPaperViewer",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "더존 급여명세서를 열어볼 수 있는 뷰어",
   "main": "main.js",
   "scripts": {
