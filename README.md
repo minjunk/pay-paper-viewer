@@ -1,3 +1,5 @@
+<img src="src/resources/icon.png" width="100" alt="" aria-hidden="true" />
+
 # 급여명세서 뷰어
 
 [![npm](https://img.shields.io/github/downloads/minjunk/pay-paper-viewer/total?style=for-the-badge)][download-url]
