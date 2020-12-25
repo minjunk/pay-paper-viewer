@@ -49,19 +49,19 @@ const mainConfig: webpack.Configuration = merge(baseConfig, {
   entry: path.join(srcDir, 'main/index.ts'),
   output: {
     filename: 'main.js',
-    chunkFilename: 'build/main.[hash].chunk.js',
+    chunkFilename: 'build/main.[chunkhash].chunk.js',
   },
-  target: 'electron-main',
+  target: 'electron11-main',
 });
 
 const rendererConfig: webpack.Configuration = merge(baseConfig, {
   name: 'renderer',
-  target: 'electron-renderer',
+  target: 'electron11-renderer',
   entry: path.join(srcDir, 'renderer/index.tsx'),
   devtool: isEnvDevelopment ? 'inline-source-map' : false,
   output: {
-    filename: 'build/renderer.[hash].js',
-    chunkFilename: 'build/renderer.[hash].chunk.js',
+    filename: 'build/renderer.[chunkhash].js',
+    chunkFilename: 'build/renderer.[chunkhash].chunk.js',
   },
   devServer: {
     port,
@@ -85,19 +85,6 @@ const rendererConfig: webpack.Configuration = merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.module\.css$/,
-        exclude: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              module: true,
-            },
-          },
-        ],
-      },
-      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -110,6 +97,8 @@ const rendererConfig: webpack.Configuration = merge(baseConfig, {
     new webpack.DefinePlugin({
       'process.env.PORT': JSON.stringify(port),
     }),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     new MiniCssExtractPlugin({
       filename: 'build/renderer.[contenthash].css',
       chunkFilename: 'build/renderer.[contenthash].chunk.css',

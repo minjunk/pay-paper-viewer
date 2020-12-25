@@ -1,0 +1,4 @@
+{
+  // https://github.com/microsoft/vscode/issues/47299
+  "javascript.suggestionActions.enabled": false
+}

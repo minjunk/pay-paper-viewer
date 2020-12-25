@@ -14,6 +14,7 @@ export const OpenFileApp: React.FC = () => {
   const webviewRef = useRef<Electron.WebviewTag>();
   const [loading, setLoading] = useState<boolean>(false);
   const [decrypted, setDecrypted] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = useCallback((_event, passwd: string) => {
     setLoading(true);
@@ -22,11 +23,13 @@ export const OpenFileApp: React.FC = () => {
 
   const handleOpenFileError = useCallback(() => {
     setLoading(false);
+    setErrorMessage('파일을 열 수 없습니다. 파일 형식이나 비밀번호를 다시 확인 해 주세요.');
   }, []);
 
   const handleDecryptedFile = useCallback((_event, data: string) => {
     const blob = createBlobURL(data);
     setDecrypted(blob);
+    setErrorMessage(null);
   }, []);
 
   const handleWebviewDomReady = useCallback((event: WebviewDomReadyEvent) => {
@@ -71,12 +74,10 @@ export const OpenFileApp: React.FC = () => {
   return (
     <>
       <div className="ui raised very padded text container segment piled">
-        <h2 className="ui header">
-          급여명세서 뷰어
-        </h2>
         <InputPassword
           loading={loading}
           onSubmit={handleSubmit}
+          errorMessage={errorMessage}
         />
       </div>
       <Message />
