@@ -6,6 +6,7 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/typings.d.ts",
+    "scripts/*.js",
     "*.config.ts",
     "*.config.js",
     ".eslintrc.js"
