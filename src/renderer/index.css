@@ -1,0 +1,21 @@
+body {
+  margin: 1em;
+  height: auto;
+}
+
+.ui.menu {
+  margin: 0;
+}
+
+
+.ui.menu button.item {
+  outline: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.ui.menu,
+.ui.menu .item-first-child,
+.ui.menu .item-last-child {
+  border-radius: 0;
+}

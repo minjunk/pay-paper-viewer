@@ -14,6 +14,7 @@ export const OpenFileApp: React.FC = () => {
   const webviewRef = useRef<Electron.WebviewTag>();
   const [loading, setLoading] = useState<boolean>(false);
   const [decrypted, setDecrypted] = useState<string>();
+  const [showWebView, setShowWebView] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = useCallback((_event, passwd: string) => {
@@ -34,6 +35,7 @@ export const OpenFileApp: React.FC = () => {
 
   const handleWebviewDomReady = useCallback((event: WebviewDomReadyEvent) => {
     setLoading(false);
+    setShowWebView(true);
 
     // 메인 프로세서에 '급여명세서'파일이 열렸음을 알린다.
     ipcRenderer.send('open-paper', {
@@ -85,6 +87,7 @@ export const OpenFileApp: React.FC = () => {
       <Webview
         src={decrypted}
         ref={webviewRef}
+        show={showWebView}
         onDomReady={handleWebviewDomReady}
       />
     </>
