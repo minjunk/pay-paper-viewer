@@ -7,7 +7,7 @@ async function openFileDialog(win: BrowserWindow): Promise<string | null> {
     title: '급여명세서 파일 선택',
     properties: ['openFile'],
     filters: [
-      { name: 'HTML 파일', extensions: ['htm'] },
+      { name: 'HTML 파일', extensions: ['htm', 'html'] },
     ],
   });
 

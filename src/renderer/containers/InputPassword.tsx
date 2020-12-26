@@ -33,11 +33,13 @@ function setlocalStoragePassword(password: string) {
 export type Props = {
   loading: boolean;
   onSubmit(event: React.FormEvent<HTMLFormElement>, password: string): void;
+  errorMessage?: string;
 };
 
 export const InputPassword: React.FC<Props> = ({
   loading,
   onSubmit,
+  errorMessage,
 }: Props) => {
   const savedPassword = getlocalStoragePassword();
   const inputRef = useRef<HTMLInputElement>();
@@ -64,6 +66,10 @@ export const InputPassword: React.FC<Props> = ({
     }
   }, [savePassword, inputRef]);
 
+  useEffect(() => {
+    setInputError(!!errorMessage);
+  }, [inputError, errorMessage]);
+
   const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (inputRef.current) {
@@ -87,7 +93,7 @@ export const InputPassword: React.FC<Props> = ({
       id="form"
       method="POST"
       encType="multipart/form-data"
-      className={cx('ui form', loading && 'loading')}
+      className={cx('ui form', loading && 'loading', inputError && 'error')}
       onSubmit={handleSubmit}
     >
       <div className={cx('field', inputError && 'error')}>
@@ -112,7 +118,12 @@ export const InputPassword: React.FC<Props> = ({
           <label htmlFor="checkbox">비밀번호 저장</label>
         </div>
       </div>
-      <Button type="submit">
+      {errorMessage && (
+        <div className="ui error message">
+          <p>{errorMessage}</p>
+        </div>
+      )}
+      <Button type="submit" className="primary">
         파일 열기
       </Button>
     </form>

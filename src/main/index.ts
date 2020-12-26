@@ -1,9 +1,10 @@
 import {
-  app, ipcMain, BrowserWindow, Menu,
+  app, dialog, ipcMain, BrowserWindow, Menu,
 } from 'electron';
 import createWindow from './createWindow';
 import appMenu, { switchPaperActionMenu } from './appMenu';
 import openFile from './openFile';
+import savePdfDialog from './savePdfDialog';
 
 // 메뉴바
 const menu = appMenu(app.name);
@@ -44,7 +45,19 @@ ipcMain.on('open-file', (event, password) => {
       event.reply('decrypted-file', decrypted);
     })
     .catch(() => {
+      const win = BrowserWindow.fromWebContents(event.sender);
+      dialog.showMessageBox(win, {
+        type: 'error',
+        message: '급여명세서 파일을 열지 못했습니다. 다시 시도 해 주세요.',
+      });
       event.reply('open-file-error');
+    });
+});
+
+ipcMain.on('export-pdf', (event, { title }) => {
+  savePdfDialog(title)
+    .then(({ filePath }) => {
+      event.reply('will-export-pdf-path', filePath);
     });
 });
 

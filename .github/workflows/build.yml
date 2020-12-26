@@ -12,11 +12,20 @@ jobs:
       CI: true
       NODE_ENV: production
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      APPLE_DEVELOPER_API_KEY_ID: ${{ secrets.APPLE_DEVELOPER_API_KEY_ID }}
+      APPLE_DEVELOPER_API_ISSUER_ID: ${{ secrets.APPLE_DEVELOPER_API_ISSUER_ID }}
+      CSC_LINK: ${{ secrets.APPLE_DEVELOPER_CERTS }} # base64 -i certs.p12 -o encoded.txt
+      CSC_KEY_PASSWORD: ${{ secrets.APPLE_DEVELOPER_CERTS_PASSWORD }}
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
       with:
         node-version: 12
+    - name: Prepare for app notarization
+      # Import Apple API key for app notarization on macOS
+      run: |
+        mkdir -p ~/private_keys/
+        echo '${{ secrets.APPLE_DEVELOPER_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_DEVELOPER_API_KEY_ID }}.p8
     - name: Install
       run: |
         yarn install --production=false
@@ -26,4 +35,6 @@ jobs:
     - name: Build
       run: |
         yarn run dist:build
-        yarn run dist:pack --publish never
+    - name: Packaging
+      run: |
+        yarn run dist:pack -mw --publish never

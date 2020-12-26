@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const GithubButton: React.FC = () => (
+export const Message: React.FC = () => (
   <div className="ui message">
     <p>
       본 뷰어는
@@ -17,4 +17,4 @@ export const GithubButton: React.FC = () => (
   </div>
 );
 
-export default GithubButton;
+export default Message;

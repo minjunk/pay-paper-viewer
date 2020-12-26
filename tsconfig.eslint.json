@@ -6,7 +6,9 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/typings.d.ts",
-    "webpack.config.ts",
+    "scripts/*.js",
+    "*.config.ts",
+    "*.config.js",
     ".eslintrc.js"
   ]
 }
