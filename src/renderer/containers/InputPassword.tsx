@@ -123,7 +123,7 @@ export const InputPassword: React.FC<Props> = ({
           <p>{errorMessage}</p>
         </div>
       )}
-      <Button type="submit" className="teal">
+      <Button type="submit" className="primary">
         파일 열기
       </Button>
     </form>
